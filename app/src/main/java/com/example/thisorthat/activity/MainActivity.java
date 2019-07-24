@@ -1,0 +1,26 @@
+package com.example.thisorthat.activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import com.example.thisorthat.R;
+
+public class MainActivity extends AppCompatActivity {
+    String username;
+    TextView helloUser;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        helloUser = findViewById(R.id.helloUser);
+
+        helloUser.setText("Hello " + username);
+    }
+}

@@ -27,6 +27,10 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        initialize();
+    }
+
+    private void initialize() {
         edUsername = findViewById(R.id.edSignupUsername);
         edPassword = findViewById(R.id.edSignupPassword);
         edPasswordConfirm = findViewById(R.id.edSignupPasswordConfirm);
@@ -34,37 +38,51 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup(View view) {
+        if (!checkFormIsValid()) {
+        } else {
+            callSignUpApi();
+        }
+    }
+
+    private boolean checkFormIsValid() {
         if (TextUtils.isEmpty(edUsername.getText())) {
             edUsername.setError("Username is required.");
+            return false;
         } else if (TextUtils.isEmpty(edPassword.getText())) {
             edPassword.setError("Password is required.");
+            return false;
         } else if (TextUtils.isEmpty(edPasswordConfirm.getText())) {
             edPassword.setError("Password Confirm is required.");
+            return false;
         } else if (TextUtils.isEmpty(edEmail.getText())) {
             edPassword.setError("Email is required.");
+            return false;
         } else if (edPassword.getText().equals(edPasswordConfirm.getText())) {
             edPassword.setError("Password does not match.");
-        } else {
-            UserApi userApi = RetrofitClient.getClient().create(UserApi.class);
-            User newUser = new User(edUsername.getText().toString(), edPassword.getText().toString(), edEmail.getText().toString());
-            Call<User> userCall = userApi.signup(newUser);
-            userCall.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                        intent.putExtra("username", edUsername.getText().toString());
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(SignupActivity.this, "An error happened", Toast.LENGTH_LONG).show();
-                    }
-                }
+            return false;
+        } else return true;
+    }
 
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-
+    private void callSignUpApi() {
+        UserApi userApi = RetrofitClient.getClient().create(UserApi.class);
+        User newUser = new User(edUsername.getText().toString(), edPassword.getText().toString(), edEmail.getText().toString());
+        Call<User> userCall = userApi.signup(newUser);
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                    intent.putExtra("username", edUsername.getText().toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(SignupActivity.this, "An error happened", Toast.LENGTH_LONG).show();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
     }
 }

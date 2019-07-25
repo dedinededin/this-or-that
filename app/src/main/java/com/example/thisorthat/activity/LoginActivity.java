@@ -27,38 +27,53 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initialize();
+    }
+
+    private void initialize() {
         edUsername = findViewById(R.id.edLoginUsername);
         edPassword = findViewById(R.id.edLoginPassword);
     }
 
     public void login(View view) {
-        if (TextUtils.isEmpty(edUsername.getText())) {
-            edUsername.setError("Username is required.");
-        } else if (TextUtils.isEmpty(edUsername.getText())) {
-            edPassword.setError("Password is required.");
+        if (!checkFormIsValid()) {
         } else {
-            UserApi userApi = RetrofitClient.getClient().create(UserApi.class);
-            Call<User> userCall = userApi.login(edUsername.getText().toString(), edPassword.getText().toString());
-            userCall.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("username", edUsername.getText().toString());
-                        startActivity(intent);
-                    } else {//TODO: Get messages like this user already exists.
-                        Toast.makeText(LoginActivity.this, "Invalid Credientials", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                }
-            });
-
+            callLoginApi();
         }
 
     }
+
+    private boolean checkFormIsValid() {
+        if (TextUtils.isEmpty(edUsername.getText())) {
+            edUsername.setError("Username is required.");
+            return false;
+        } else if (TextUtils.isEmpty(edPassword.getText())) {
+            edPassword.setError("Password is required.");
+            return false;
+        } else return true;
+    }
+
+    private void callLoginApi() {
+        UserApi userApi = RetrofitClient.getClient().create(UserApi.class);
+        Call<User> userCall = userApi.login(edUsername.getText().toString(), edPassword.getText().toString());
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("username", edUsername.getText().toString());
+                    startActivity(intent);
+                } else {//TODO: Get messages like this user already exists.
+                    Toast.makeText(LoginActivity.this, "Login failed: Invalid username or password.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+            }
+        });
+    }
+
 
     public void signup(View view) {
         Intent intent = new Intent(this, SignupActivity.class);

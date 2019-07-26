@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import com.example.thisorthat.R;
 
-public class MainActivity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity {
     String username;
     TextView helloUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("username");

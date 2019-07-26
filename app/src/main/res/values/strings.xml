@@ -5,4 +5,9 @@
     <!-- Change the following strings as required -->
     <string name="back4app_app_id">uQ50ISOzXGQOuu0cTXE3vEb6BdbWP37gavPXWlY7</string>
     <string name="back4app_rest_api_key">q7GDdeAj7wMrptvcKN9XkslxB8bu452YjT7ASLkM</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_add_post">Add Post</string>
+    <string name="title_settings">Settings</string>
+
 </resources>

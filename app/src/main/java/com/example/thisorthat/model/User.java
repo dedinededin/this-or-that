@@ -5,7 +5,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-
+    @SerializedName("__type")
+    @Expose
+    private String type;
+    @SerializedName("className")
+    @Expose
+    private String className;
     @SerializedName("objectId")
     @Expose
     private String objectId;
@@ -28,20 +33,26 @@ public class User {
     @Expose
     private String email;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public String getObjectId() {
@@ -84,20 +95,19 @@ public class User {
         this.sessionToken = sessionToken;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "objectId='" + objectId + '\'' +
-                ", username='" + username + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", sessionToken='" + sessionToken + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
     }
 
-    public User(String username, String password, String email) {
-        this.username = username;
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
     }
 }

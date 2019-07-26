@@ -2,7 +2,9 @@ package com.example.thisorthat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.thisorthat.R;
+import com.example.thisorthat.activity.main.MainActivity;
 import com.example.thisorthat.model.User;
 import com.example.thisorthat.network.RetrofitClient;
 import com.example.thisorthat.network.UserApi;
@@ -70,10 +73,17 @@ public class SignupActivity extends AppCompatActivity {
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 201) {
+
+                    SharedPreferences sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("sessionToken", response.body().getSessionToken());
+                    editor.putString("objectId", response.body().getObjectId());
+                    editor.commit();
+
                     Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                    intent.putExtra("username", edUsername.getText().toString());
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(SignupActivity.this, "An error happened", Toast.LENGTH_LONG).show();
                 }

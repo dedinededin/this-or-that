@@ -39,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private void initialize() {
         edUsername = findViewById(R.id.edLoginUsername);
         edPassword = findViewById(R.id.edLoginPassword);
-        progressDialog = new ProgressDialog(this);
     }
 
     public void login(View view) {
@@ -61,20 +60,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void callLoginApi() {
+        showProgressDialog();
         UserApi userApi = RetrofitClient.getClient().create(UserApi.class);
         Call<User> userCall = userApi.login(edUsername.getText().toString(), edPassword.getText().toString());
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() == 200) {
-
+                    progressDialog.dismiss();
                     SharedPreferences sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("sessionToken", response.body().getSessionToken());
                     editor.putString("objectId", response.body().getObjectId());
                     editor.commit();
 
-                    showProgressDialog();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
 
@@ -98,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
     public void checkUserLoggedIn() {//Todo: check this later
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", Context.MODE_PRIVATE);
         if (!sharedPreferences.getString("sessionToken", "").isEmpty()) {
-            progressDialog.dismiss();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

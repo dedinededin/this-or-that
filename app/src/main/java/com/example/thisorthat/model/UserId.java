@@ -19,6 +19,10 @@ public class UserId {
         this.objectId = objectId;
     }
 
+    public UserId() {
+
+    }
+
     public String getType() {
         return type;
     }
@@ -43,4 +47,12 @@ public class UserId {
         this.objectId = objectId;
     }
 
+    @Override
+    public String toString() {
+        return "UserId{" +
+                "type='" + type + '\'' +
+                ", className='" + className + '\'' +
+                ", objectId='" + objectId + '\'' +
+                '}';
+    }
 }

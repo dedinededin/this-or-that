@@ -39,6 +39,10 @@ public class User {
         this.email = email;
     }
 
+    public User() {
+
+    }
+
     public String getType() {
         return type;
     }
@@ -109,5 +113,20 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "type='" + type + '\'' +
+                ", className='" + className + '\'' +
+                ", objectId='" + objectId + '\'' +
+                ", username='" + username + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", sessionToken='" + sessionToken + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

@@ -85,4 +85,17 @@ public class Post {
 
     public void setUserId(UserId userId) { this.userId = userId; }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "objectId='" + objectId + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", description='" + description + '\'' +
+                ", leftImage=" + leftImage +
+                ", rightImage=" + rightImage +
+                ", userId=" + userId +
+                ", user=" + user +
+                '}';
+    }
 }

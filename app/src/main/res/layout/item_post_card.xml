@@ -1,114 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="45dp"
+
+    app:cardElevation="0dp">
+
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/cardView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="5dp"-->
+    <!--app:cardCornerRadius="5dp">-->
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp">
 
         <!--TRKCELL-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@android:color/white">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profileImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@color/ic_launcher_background" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                app:civ_border_color="@color/blue2"
+                app:civ_border_width="0.5dp" />
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:text="username"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="-4dp"
-                    android:text="username"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-
-                <TextView
-
-                    android:id="@+id/postDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="27/04/2018"
-                    android:textSize="16dp"
-                    android:textStyle="italic" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/blue" />
         <!--/TRKCELL-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
 
-            <ImageView
-                android:id="@+id/leftImagePlace"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginEnd="2.5dp"
-                android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/image_placeholder"
-                />
+                android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/rightImagePlace"
+                <ImageView
+                    android:id="@+id/leftImagePlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="center"
+                    android:src="@drawable/image_placeholder" />
+
+
+                <ImageView
+                    android:id="@+id/voteThisImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/checked"
+                    android:visibility="invisible" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginStart="2.5dp"
-                android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/image_placeholder" />
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/rightImagePlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="center"
+                    android:src="@drawable/image_placeholder" />
+
+                <ImageView
+                    android:id="@+id/voteThatImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/checked"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+
         </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<Button-->
+        <!--android:id="@+id/voteThisButton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="2.5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/this_button_background"-->
+        <!--android:text="Vote this"-->
+        <!--android:textColor="@color/colorWhite" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/voteThatButton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="2.5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/this_button_background"-->
+        <!--android:text="Vote that"-->
+        <!--android:textColor="@color/colorWhite" />-->
+
+        <!--</LinearLayout>-->
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/voteResults"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="20dp"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/voteThisButton"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vote this" />
+                android:text="This 70%"
+                android:textColor="@color/blue2" />
 
-            <Button
-                android:id="@+id/voteThatButton"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vote that" />
+                android:text="15 Votes"
+                android:textAlignment="center"
+                android:textColor="@color/blue2" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="That 30%"
+                android:textAlignment="textEnd"
+                android:textColor="@color/red2" />
         </LinearLayout>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/voteProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true" />
 
         <TextView
             android:id="@+id/postDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Description" />
+
+        <TextView
+            android:id="@+id/postDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:text="Post date"
+            android:textSize="10sp" />
 
     </LinearLayout>
 

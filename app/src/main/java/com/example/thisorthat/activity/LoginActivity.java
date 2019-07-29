@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("sessionToken", response.body().getSessionToken());
                     editor.putString("objectId", response.body().getObjectId());
+                    editor.putString("username", response.body().getUsername());
                     editor.commit();
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

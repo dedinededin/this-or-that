@@ -19,7 +19,6 @@
             android:gravity="center"
             android:scaleType="centerCrop"
             android:src="@drawable/benefitsofsocialmedia900x600"
-            android:text="This or That"
             android:textColor="@color/colorWhite"
             android:textSize="50dp"
             android:textStyle="bold" />

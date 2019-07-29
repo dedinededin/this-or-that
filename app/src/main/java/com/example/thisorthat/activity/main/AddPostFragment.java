@@ -8,12 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +15,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.thisorthat.R;
 import com.example.thisorthat.helper.ImageFilePath;
@@ -46,24 +47,48 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AddPostFragment extends Fragment implements View.OnClickListener {
 
+    private static final int REQUEST_GET_LEFT_IMAGE = 100;
+    private static final int REQUEST_GET_RIGHT_IMAGE = 101;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     ImageView leftImageView, rightImageView;
     File leftImageFile, rightImageFile;
     Button submitButton;
     EditText postDesc;
     PostApi api;
     ProgressDialog progressDialog;
-    private static final int REQUEST_GET_LEFT_IMAGE = 100;
-    private static final int REQUEST_GET_RIGHT_IMAGE = 101;
-
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
     Image leftImage, rightImage;
 
     public AddPostFragment() {
         // Required empty public constructor
+    }
+
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+
+        if (permission2 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_GET_LEFT_IMAGE
+            );
+        }
+
     }
 
     @Override
@@ -88,7 +113,14 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         rightImageView.setOnClickListener(this);
         submitButton = getView().findViewById(R.id.submitPost);
         submitButton.setOnClickListener(this);
+
+        TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("New Post");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setIcon(android.R.color.transparent);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -130,7 +162,7 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         newPost.setLeftImage(leftImage);
         newPost.setRightImage(rightImage);
         newPost.setUserId(new UserId(getActivity().getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("objectId", "Error")));//TODO: change this
-
+        newPost.setUsername(getActivity().getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("username", "Error"));
         Call<Post> postCall = api.submitPost(newPost);
 
         postCall.enqueue(new Callback<Post>() {
@@ -173,7 +205,6 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
         return imageToReturn;
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -202,31 +233,6 @@ public class AddPostFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
         }
 
-
-    }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permission2 = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-
-        if (permission2 != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_GET_LEFT_IMAGE
-            );
-        }
 
     }
 

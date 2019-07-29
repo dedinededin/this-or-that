@@ -1,20 +1,31 @@
 package com.example.thisorthat.adapter;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.format.DateUtils;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thisorthat.R;
+import com.example.thisorthat.helper.DoubleClickListener;
 import com.example.thisorthat.model.Post;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
@@ -66,8 +77,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername, tvPostDate, tvPostDescription;
-        ImageView ivProfileImage, ivLeftImage, ivRightImage;
-        Button btnVoteThis, btnVoteThat;
+        ImageView ivLeftImage, ivRightImage, ivVoteThis, ivVoteThat;
+        CircleImageView ivProfileImage;
+        ProgressBar voteProgress;
+        LinearLayout voteResults;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -75,22 +88,67 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             tvPostDate = itemView.findViewById(R.id.postDate);
             tvPostDescription = itemView.findViewById(R.id.postDescription);
             ivProfileImage = itemView.findViewById(R.id.profileImage);
+            ivVoteThis = itemView.findViewById(R.id.voteThisImage);
+            ivVoteThat = itemView.findViewById(R.id.voteThatImage);
+
+            voteResults = itemView.findViewById(R.id.voteResults);
+            voteProgress = itemView.findViewById(R.id.voteProgress);
+            voteProgress.setProgressDrawable(itemView.getContext().getResources().getDrawable(R.drawable.custom_progressbar));
+            voteProgress.setProgress(70);
+
+
             ivLeftImage = itemView.findViewById(R.id.leftImagePlace);
             ivRightImage = itemView.findViewById(R.id.rightImagePlace);
-
-            btnVoteThis = itemView.findViewById(R.id.voteThisButton);
-            btnVoteThat = itemView.findViewById(R.id.voteThatButton);
-
-            btnVoteThis.setOnClickListener(this);
-            btnVoteThat.setOnClickListener(this);
+            ivLeftImage.setOnClickListener(new DoubleClickListener() {
+                @Override
+                public void onDoubleClick() {
+                    if (ivVoteThis.getVisibility() == View.VISIBLE) {
+                        ivVoteThis.setVisibility(View.INVISIBLE);
+                    } else if (ivVoteThis.getVisibility() == View.INVISIBLE) {
+                        ivVoteThis.setVisibility(View.VISIBLE);
+                    }
+                    ivVoteThat.setVisibility(View.INVISIBLE);
+                    voteResults.setVisibility(View.VISIBLE);
+                    voteProgress.setVisibility(View.VISIBLE);
+                }
+            });
+            ivRightImage.setOnClickListener(new DoubleClickListener() {
+                @Override
+                public void onDoubleClick() {
+                    if (ivVoteThat.getVisibility() == View.VISIBLE) {
+                        ivVoteThat.setVisibility(View.INVISIBLE);
+                    } else if (ivVoteThat.getVisibility() == View.INVISIBLE) {
+                        ivVoteThat.setVisibility(View.VISIBLE);
+                    }
+                    ivVoteThis.setVisibility(View.INVISIBLE);
+                    voteResults.setVisibility(View.VISIBLE);
+                    voteProgress.setVisibility(View.VISIBLE);
+                }
+            });
         }
 
         public void setData(Post selectedPost, int position) {
             if (selectedPost.getUser() != null) {
                 tvUsername.setText(selectedPost.getUser().getUsername());
-            } else tvUsername.setText("Not loaded yet..");
-            tvPostDate.setText(selectedPost.getCreatedAt());
-            tvPostDescription.setText(selectedPost.getDescription());
+            } else tvUsername.setText(selectedPost.getUsername());
+
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            try {
+                Date date = format.parse(selectedPost.getCreatedAt());
+                tvPostDate.setText(DateUtils.getRelativeTimeSpanString(date.getTime()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            StyleSpan boldSpan = new StyleSpan(android.graphics.Typeface.BOLD);
+            builder.append(selectedPost.getUsername(), boldSpan, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    .append(" ")
+                    .append(selectedPost.getDescription());
+
+            tvPostDescription.setText(builder);
             Picasso.get().load("https://api.adorable.io/avatars/285/abott@adorable.png").fit().into(ivProfileImage);
             Picasso.get().load(selectedPost.getLeftImage().getUrl()).fit().into(ivLeftImage);
             Picasso.get().load(selectedPost.getRightImage().getUrl()).fit().into(ivRightImage);
@@ -102,4 +160,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
+
 }

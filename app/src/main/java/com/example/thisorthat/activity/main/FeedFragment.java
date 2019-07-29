@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,12 +17,12 @@ import com.example.thisorthat.R;
 import com.example.thisorthat.adapter.MyRecyclerViewAdapter;
 import com.example.thisorthat.model.Post;
 import com.example.thisorthat.model.PostGetResult;
-import com.example.thisorthat.model.User;
 import com.example.thisorthat.network.PostApi;
 import com.example.thisorthat.network.RetrofitClient;
 import com.example.thisorthat.network.UserApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +64,11 @@ public class FeedFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyRecyclerViewAdapter(getActivity(), postArrayList);
         recyclerView.setAdapter(adapter);
+
+        TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("This or That");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
     }
 
     private void getPosts() {
@@ -74,22 +81,22 @@ public class FeedFragment extends Fragment {
             public void onResponse(Call<PostGetResult> call, Response<PostGetResult> response) {
 
                 ArrayList<Post> x = response.body().getResults();
-
-                for (final Post p : x) {
-                    Call<User> userCall = userApi.getUser(p.getUserId().getObjectId());
-                    userCall.enqueue(new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            p.setUser(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-
-                        }
-                    });
-
-                }
+                Collections.reverse(x);
+//                for (final Post p : x) {
+//                    Call<User> userCall = userApi.getUser(p.getUserId().getObjectId());
+//                    userCall.enqueue(new Callback<User>() {
+//                        @Override
+//                        public void onResponse(Call<User> call, Response<User> response) {
+//                            p.setUser(response.body());
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<User> call, Throwable t) {
+//
+//                        }
+//                    });
+//
+//                }
                 postArrayList.addAll(x);
                 adapter.notifyDataSetChanged();
 
@@ -101,5 +108,7 @@ public class FeedFragment extends Fragment {
             }
         });
     }
+
+
 
 }

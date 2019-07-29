@@ -8,6 +8,9 @@ public class Post {
     @SerializedName("objectId")
     @Expose
     private String objectId;
+    @SerializedName("username")
+    @Expose
+    private String username;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -29,9 +32,21 @@ public class Post {
 
     private User user;
 
-    public User getUser() { return user; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUser(User user) { this.user = user; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getObjectId() {
         return objectId;
@@ -45,7 +60,9 @@ public class Post {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getUpdatedAt() {
         return updatedAt;
@@ -83,7 +100,9 @@ public class Post {
         return userId;
     }
 
-    public void setUserId(UserId userId) { this.userId = userId; }
+    public void setUserId(UserId userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {

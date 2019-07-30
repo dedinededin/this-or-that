@@ -98,6 +98,7 @@ public class SignupActivity extends BaseActivity {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("sessionToken", response.body().getSessionToken());
                     editor.putString("objectId", response.body().getObjectId());
+                    editor.putString("username", response.body().getUsername());
                     editor.commit();
 
                     Intent intent = new Intent(SignupActivity.this, MainActivity.class);

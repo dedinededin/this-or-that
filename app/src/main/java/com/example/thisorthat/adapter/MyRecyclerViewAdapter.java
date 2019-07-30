@@ -126,17 +126,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             }
             if (totalCount == 0) {
                 voteProgress.setVisibility(View.GONE);
+                tvThisCount.setText("");
+                tvThatCount.setText("");
                 tvTotalCount.setText(String.format("No votes yet!", totalCount));
             }
-//            else {
-//                voteResults.setVisibility(View.VISIBLE);
-//                tvTotalCount.setText(String.format("No votes yet, be the first voter!", totalCount));
-//            }
-
-//            if (thisCount > thatCount) {
-//            } else {
-//            }
-
         }
 
         public void setData(Post selectedPost, int position) {

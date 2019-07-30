@@ -29,8 +29,30 @@ public class Post {
     @SerializedName("userId")
     @Expose
     private UserId userId;
+    @SerializedName("thisCount")
+    @Expose
+    private int thisCount;
+    @SerializedName("thatCount")
+    @Expose
+    private int thatCount;
 
     private User user;
+
+    public int getThisCount() {
+        return thisCount;
+    }
+
+    public void setThisCount(int thisCount) {
+        this.thisCount = thisCount;
+    }
+
+    public int getThatCount() {
+        return thatCount;
+    }
+
+    public void setThatCount(int thatCount) {
+        this.thatCount = thatCount;
+    }
 
     public String getUsername() {
         return username;

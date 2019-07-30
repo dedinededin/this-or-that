@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="45dp"
+    android:background="@color/colorWhite"
 
     app:cardElevation="0dp">
 
@@ -145,44 +146,44 @@
         <!--</LinearLayout>-->
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/voteResults"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginBottom="3dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <TextView
+                android:id="@+id/thisCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="This 70%"
                 android:textColor="@color/blue2" />
 
             <TextView
+                android:id="@+id/totalCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="15 Votes"
                 android:textAlignment="center"
                 android:textColor="@color/blue2" />
 
             <TextView
+                android:id="@+id/thatCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="That 30%"
                 android:textAlignment="textEnd"
                 android:textColor="@color/red2" />
         </LinearLayout>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/voteProgress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/postDescription"

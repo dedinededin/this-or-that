@@ -8,38 +8,44 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.thisorthat.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    final Fragment fragment1 = new FeedFragment();
+    final Fragment fragment3 = new SettingsFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment fragment2 = new AddPostFragment();
+    Fragment active = fragment1;
+
     Toolbar toolbar;
     BottomNavigationView navView;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {//Todo: check return true false later
-            Fragment selectedFragment = null;
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    selectedFragment = new FeedFragment();
-                    break;
+                    fm.beginTransaction().hide(active).show(fragment1).commit();
+                    active = fragment1;
+                    return true;
                 case R.id.navigation_add_post:
-                    selectedFragment = new AddPostFragment();
-                    break;
+                    fm.beginTransaction().hide(active).show(fragment2).commit();
+                    active = fragment2;
+                    return true;
                 case R.id.navigation_settings:
-                    selectedFragment = new SettingsFragment();
-                    break;
+                    fm.beginTransaction().hide(active).show(fragment3).commit();
+                    active = fragment3;
+                    return true;
             }
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
-                    .addToBackStack(null)
-                    .commit();
-            return true;
+            return false;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +59,14 @@ public class MainActivity extends AppCompatActivity {
     private void initialize() {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FeedFragment()).commit();
 
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        fm.beginTransaction().add(R.id.fragment_container, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.fragment_container, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.fragment_container, fragment1, "1").commit();
 
     }
 
@@ -66,10 +75,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FeedFragment()).commit();
+            fm.beginTransaction().hide(active).show(fragment1).commit();
+            active = fragment1;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void navigate(int fragmentId) {
+        if (fragmentId == 0) {
+            fm.beginTransaction().hide(active).show(fragment1).commit();
+            active = fragment1;
+            fragment2 = new AddPostFragment();
+            fm.beginTransaction().remove(fragment2).commit();
+            fm.beginTransaction().add(R.id.fragment_container, fragment2, "2").hide(fragment2).commit();
+            FeedFragment fragment = (FeedFragment) fm.findFragmentById(R.id.fragment_container);
+            fragment.refresh();
+        }
     }
 
 

@@ -1,14 +1,15 @@
 package com.example.thisorthat.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.thisorthat.R;
@@ -21,23 +22,41 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends BaseActivity {
 
     EditText edUsername, edPassword, edPasswordConfirm, edEmail;
+    ScrollView scrollView;
+    Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        attachKeyboardListeners();
         initialize();
     }
 
     private void initialize() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        attachKeyboardListeners();
+
         edUsername = findViewById(R.id.edSignupUsername);
         edPassword = findViewById(R.id.edSignupPassword);
         edPasswordConfirm = findViewById(R.id.edSignupPasswordConfirm);
         edEmail = findViewById(R.id.edSignupEmail);
+        scrollView = findViewById(R.id.scrollView);
+        signUpButton = findViewById(R.id.signUpButton);
+    }
+
+    @Override
+    protected void onShowKeyboard(int keyboardHeight) {
+        // do things when keyboard is shown
+        scrollView.smoothScrollTo(0, signUpButton.getTop());
+    }
+
+    @Override
+    protected void onHideKeyboard() {
+        // do things when keyboard is hidden
     }
 
     public void signup(View view) {
@@ -82,6 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                     editor.commit();
 
                     Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                    finish();
                     startActivity(intent);
 
                 } else {

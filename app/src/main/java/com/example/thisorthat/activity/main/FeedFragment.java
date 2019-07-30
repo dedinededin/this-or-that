@@ -1,6 +1,7 @@
 package com.example.thisorthat.activity.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.thisorthat.R;
 import com.example.thisorthat.adapter.MyRecyclerViewAdapter;
@@ -37,6 +39,7 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     MyRecyclerViewAdapter adapter;
     ArrayList<Post> postArrayList;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -56,6 +59,16 @@ public class FeedFragment extends Fragment {
         initialize();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("asdga", "onResume");
+        TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("This or That");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
     private void initialize() {
         recyclerView = getView().findViewById(R.id.recyclerView);
         postArrayList = new ArrayList<>();
@@ -65,10 +78,15 @@ public class FeedFragment extends Fragment {
         adapter = new MyRecyclerViewAdapter(getActivity(), postArrayList);
         recyclerView.setAdapter(adapter);
 
-        TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("This or That");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        refresh();
+                    }
+                }
+        );
     }
 
     private void getPosts() {
@@ -82,6 +100,29 @@ public class FeedFragment extends Fragment {
 
                 ArrayList<Post> x = response.body().getResults();
                 Collections.reverse(x);
+
+                postArrayList.addAll(x);
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<PostGetResult> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void refresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        postArrayList.clear();
+        getPosts();
+
+
+    }
+
+
+}
 //                for (final Post p : x) {
 //                    Call<User> userCall = userApi.getUser(p.getUserId().getObjectId());
 //                    userCall.enqueue(new Callback<User>() {
@@ -97,18 +138,3 @@ public class FeedFragment extends Fragment {
 //                    });
 //
 //                }
-                postArrayList.addAll(x);
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFailure(Call<PostGetResult> call, Throwable t) {
-
-            }
-        });
-    }
-
-
-
-}

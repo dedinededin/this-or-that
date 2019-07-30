@@ -1,98 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activity.SignupActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:background="#95a5a6"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/benefitsofsocialmedia900x600"
-            android:textColor="@color/colorWhite"
-            android:textSize="50dp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#66000000" />
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="65dp"
-            android:padding="10dp"
-            android:src="@mipmap/ic_launcher_new" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edSignupEmail"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="10dp" />
+            android:layout_height="250dp">
 
-        <EditText
-            android:id="@+id/edSignupUsername"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:background="#95a5a6"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/benefitsofsocialmedia900x600"
+                android:textColor="@color/colorWhite"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:padding="10dp"
+                android:src="@mipmap/ic_launcher_new" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Username"
-            android:inputType="text"
-            android:padding="10dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
 
-        <EditText
-            android:id="@+id/edSignupPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+            <EditText
+                android:id="@+id/edSignupEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/edSignupPasswordConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+            <EditText
+                android:id="@+id/edSignupUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Username"
+                android:inputType="text"
+                android:padding="10dp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/button_background"
-            android:onClick="signup"
-            android:text="Sign Up"
-            android:textColor="@color/colorWhite"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/edSignupPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp" />
 
+            <EditText
+                android:id="@+id/edSignupPasswordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button_background"
+                android:onClick="signup"
+                android:text="Sign Up"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

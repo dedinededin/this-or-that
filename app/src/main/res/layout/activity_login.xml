@@ -1,83 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activity.LoginActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:background="#95a5a6"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/benefitsofsocialmedia900x600"
-            android:textColor="@color/colorWhite"
-            android:textSize="50dp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#66000000" />
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="65dp"
-            android:src="@drawable/ic_launcher_new_web" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edLoginUsername"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Username"
-            android:inputType="text"
-            android:padding="10dp" />
+            android:layout_height="250dp">
 
-        <EditText
-            android:id="@+id/edLoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:background="#95a5a6"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/benefitsofsocialmedia900x600"
+                android:textColor="@color/colorWhite"
+                android:textSize="50dp"
+                android:textStyle="bold" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/button_background"
-            android:onClick="login"
-            android:text="Login"
-            android:textColor="@color/colorWhite"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
 
-        <TextView
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:src="@drawable/ic_launcher_new_web" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:onClick="signup"
-            android:text="You haven't account yet?" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <EditText
+                android:id="@+id/edLoginUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Username"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/edLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edittext_background"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button_background"
+                android:onClick="login"
+                android:text="Login"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="signup"
+                android:text="You haven't account yet?" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

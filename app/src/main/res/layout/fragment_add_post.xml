@@ -1,60 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:padding="10dp"
-    tools:context=".activity.main.AddPostFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/leftImagePlace"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginRight="2.5dp"
-            android:layout_weight="1"
-            android:background="@drawable/select_image_background"
-            android:scaleType="center"
-            android:src="@drawable/image_placeholder" />
-
-        <ImageView
-            android:id="@+id/rightImagePlace"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginLeft="2.5dp"
-            android:layout_weight="1"
-            android:background="@drawable/select_image_background"
-            android:scaleType="center"
-            android:src="@drawable/image_placeholder" />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/postDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/edittext_background"
-        android:gravity="top|left"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:maxLines="6"
-        android:minLines="4"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
         android:padding="10dp"
-        android:scrollbars="vertical" />
+        tools:context=".activity.main.AddPostFragment">
 
-    <Button
-        android:id="@+id/submitPost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:text="Submit"
-        android:textColor="@color/colorWhite" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/leftImagePlace"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginRight="2.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_image_background"
+                android:scaleType="center"
+                android:src="@drawable/image_placeholder" />
+
+            <ImageView
+                android:id="@+id/rightImagePlace"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="2.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_image_background"
+                android:scaleType="center"
+                android:src="@drawable/image_placeholder" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/postDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_background"
+            android:gravity="top|left"
+            android:hint="Description"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="4"
+            android:padding="10dp"
+            android:scrollbars="vertical" />
+
+        <Button
+            android:id="@+id/submitPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="Submit"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+</ScrollView>
